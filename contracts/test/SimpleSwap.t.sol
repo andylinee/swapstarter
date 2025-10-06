@@ -33,7 +33,7 @@ contract SimpleSwapTest is Test {
         tokenB.transfer(user2, 10000 * 10**18);
     }
 
-    function testInitialState() public {
+    function testInitialState() public view {
         assertEq(address(swap.tokenA()), address(tokenA));
         assertEq(address(swap.tokenB()), address(tokenB));
         assertEq(swap.reserveA(), 0);
@@ -189,7 +189,7 @@ contract SimpleSwapTest is Test {
         vm.stopPrank();
     }
 
-    function testGetAmountOut() public {
+    function testGetAmountOut() public view {
         uint256 amountIn = 100 * 10**18;
         uint256 reserveIn = 1000 * 10**18;
         uint256 reserveOut = 1000 * 10**18;

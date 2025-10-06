@@ -21,7 +21,7 @@ contract SwapTokenTest is Test {
     address public user1;
     address public user2;
 
-    // setUp runs before each test (like pytest fixture)
+    // setUp runs before each test
     function setUp() public {
         owner = address(this); // Test contract is the owner
         user1 = address(0x1);
@@ -32,7 +32,6 @@ contract SwapTokenTest is Test {
         tokenB = new SwapToken("Token B", "TKB", 1000000);
     }
 
-    // Test functions must start with "test"
     function testInitialSupply() public view {
         // Check owner received initial supply
         assertEq(tokenA.balanceOf(owner), 1000000 * 10**18);
