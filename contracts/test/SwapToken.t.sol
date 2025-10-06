@@ -49,7 +49,7 @@ contract SwapTokenTest is Test {
         uint256 amount = 100 * 10**18; // 100 tokens
         
         // Transfer from owner to user1
-        tokenA.transfer(user1, amount);
+        require(tokenA.transfer(user1, amount), "Transfer failed");
         
         assertEq(tokenA.balanceOf(user1), amount);
         assertEq(tokenA.balanceOf(owner), 1000000 * 10**18 - amount);
@@ -60,7 +60,7 @@ contract SwapTokenTest is Test {
         
         // Expect this to revert
         vm.expectRevert();
-        tokenA.transfer(user1, tooMuch);
+        require(tokenA.transfer(user1, tooMuch), "Transfer failed");
     }
 
     function testMintOnlyOwner() public {
@@ -95,7 +95,7 @@ contract SwapTokenTest is Test {
         
         // user1 transfers tokens from owner to user2
         vm.prank(user1);
-        tokenA.transferFrom(owner, user2, amount);
+        require(tokenA.transferFrom(owner, user2, amount), "Transfer failed");
         
         assertEq(tokenA.balanceOf(user2), amount);
         assertEq(tokenA.allowance(owner, user1), 0); // Allowance consumed
