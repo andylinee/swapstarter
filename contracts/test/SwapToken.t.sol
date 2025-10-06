@@ -56,11 +56,19 @@ contract SwapTokenTest is Test {
     }
 
     function testTransferFailsWithInsufficientBalance() public {
-        uint256 tooMuch = 2000000 * 10**18; // More than total supply
+        uint256 initialBalance = tokenA.balanceOf(owner);
+        uint256 tooMuch = initialBalance + 1; // Just 1 more than we have
         
-        // Expect this to revert
-        vm.expectRevert();
-        require(tokenA.transfer(user1, tooMuch), "Transfer failed");
+        // Expect the specific custom error from OpenZeppelin
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                bytes4(keccak256("ERC20InsufficientBalance(address,uint256,uint256)")),
+                owner,
+                initialBalance,
+                tooMuch
+            )
+        );
+        tokenA.transfer(user1, tooMuch);
     }
 
     function testMintOnlyOwner() public {
