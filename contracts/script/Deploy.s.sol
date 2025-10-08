@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "../src/SwapToken.sol";
+import "../src/SimpleSwap.sol";
 
 /**
  * @title DeployScript
@@ -34,6 +35,13 @@ contract DeployScript is Script {
         );
         console.log("Token B deployed at:", address(tokenB));
 
+        // Deploy SimpleSwap
+        SimpleSwap simpleSwap = new SimpleSwap(
+            address(tokenA),
+            address(tokenB)
+        );
+        console.log("SimpleSwap deployed at:", address(simpleSwap));
+
         vm.stopBroadcast();
 
         // Save deployment info
@@ -41,5 +49,10 @@ contract DeployScript is Script {
         console.log("Network: Sepolia");
         console.log("Token A:", address(tokenA));
         console.log("Token B:", address(tokenB));
+        console.log("SimpleSwap:", address(simpleSwap));
+        console.log("\nNext steps:");
+        console.log("1. Add these addresses to your frontend");
+        console.log("2. Approve SimpleSwap to spend your tokens");
+        console.log("3. Add initial liquidity");
     }
 }

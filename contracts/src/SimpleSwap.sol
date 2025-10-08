@@ -82,8 +82,8 @@ contract SimpleSwap is ReentrancyGuard {
         require(amountA > 0 && amountB > 0, "Amounts must be greater than 0");
 
         // Transfer tokens from user to this contract
-        tokenA.safeTransferFrom(msg.sender, address(this), amountA);
-        tokenB.safeTransferFrom(msg.sender, address(this), amountB);
+        tokenA.transferFrom(msg.sender, address(this), amountA);
+        tokenB.transferFrom(msg.sender, address(this), amountB);
 
         // Calculate liquidity to mint
         if (totalLiquidity == 0) {
@@ -165,8 +165,8 @@ contract SimpleSwap is ReentrancyGuard {
         require(amountBOut < reserveB, "Insufficient liquidity for swap");
 
         // Transfer tokens
-        tokenA.safeTransferFrom(msg.sender, address(this), amountAIn);
-        tokenB.safeTransfer(msg.sender, amountBOut);
+        tokenA.transferFrom(msg.sender, address(this), amountAIn);
+        tokenB.transfer(msg.sender, amountBOut);
 
         // Update reserves
         reserveA += amountAIn;
@@ -200,8 +200,8 @@ contract SimpleSwap is ReentrancyGuard {
         require(amountAOut < reserveA, "Insufficient liquidity for swap");
 
         // Transfer tokens
-        tokenB.safeTransferFrom(msg.sender, address(this), amountBIn);
-        tokenA.safeTransfer(msg.sender, amountAOut);
+        tokenB.transferFrom(msg.sender, address(this), amountBIn);
+        tokenA.transfer(msg.sender, amountAOut);
 
         // Update reserves
         reserveB += amountBIn;

@@ -27,10 +27,10 @@ contract SimpleSwapTest is Test {
         swap = new SimpleSwap(address(tokenA), address(tokenB));
 
         // Distribute tokens to users for testing
-        tokenA.transfer(user1, 10000 * 10**18);
-        tokenB.transfer(user1, 10000 * 10**18);
-        tokenA.transfer(user2, 10000 * 10**18);
-        tokenB.transfer(user2, 10000 * 10**18);
+        require(tokenA.transfer(user1, 10000 * 10**18), "Transfer failed");
+        require(tokenB.transfer(user1, 10000 * 10**18), "Transfer failed");
+        require(tokenA.transfer(user2, 10000 * 10**18), "Transfer failed");
+        require(tokenB.transfer(user2, 10000 * 10**18), "Transfer failed");
     }
 
     function testInitialState() public view {
